@@ -1,0 +1,39 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Multibrowser screenshotting</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      img { border: 3px solid #333 }
+    </style>
+  </head>
+  <body>
+    <h1>Multibrowser screenshots</h1>
+    
+    <table border="1">
+      <tr>
+        <td colspan="2">PhantomJS</td>
+        <td colspan="2">Chrome</td>
+        <td colspan="2">Firefox</td>
+      </tr>
+      <tr>
+        <td>Title:</td>
+        <td id="phantom-title">-</td>
+        <td>Title:</td>
+        <td id="chrome-title">-</td>
+        <td>Title:</td>
+        <td id="firefox-title">-</td>             
+      </tr>    
+      <tr>
+        <td colspan="2" valign="top"><img src="" id="phantom-shot"/></td>
+        <td colspan="2" valign="top"><img src="" id="chrome-shot"/></td>
+        <td colspan="2" valign="top"><img src="" id="firefox-shot"/></td>
+      </tr>
+    </table>
+    
+	  <script src="browser.js"></script>
+	  <script src="script.js"></script>	  
+  </body>
+</html>

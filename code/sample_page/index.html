@@ -1,0 +1,15 @@
+<!doctype>
+<html>
+  <head>
+    <meta charste="utf-8">
+    <title>I will be replaced</title>
+  </head>
+  <body>
+    <h1>I will be replaced</h1>
+    <script>
+      var ua = window.navigator.userAgent;
+      document.getElementsByTagName('title')[0].innerHTML = ua;
+      document.getElementsByTagName('h1')[0].innerHTML = ua;
+    </script>
+  </body>
+</html>
