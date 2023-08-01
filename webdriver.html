@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title> WebDiver testpage</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+    </head>
+    <body>
+        <h1>This is a WebDiver testpage</h1>
+		<script>
+			var getSession = function (port, cb) {
+			  var request = new XMLHttpRequest();
+			  request.open('POST', 'http://localhost:'  + port + '/session', true);
+			  request.setRequestHeader('Content-Type', 'application/json');
+			
+			  request.onload = function() {
+					cb(null, JSON.parse(request.responseText), port);
+			  };
+
+			  request.onerror = function() {
+					cb(arguments, null);
+			  };
+
+			  request.send(JSON.stringify({desiredCapabilities: {browserName: 'phantomjs', version: '', platform: 'ANY'}}));
+			};
+			
+			var openUrl = function (url, session, port, cb) {
+				var request = new XMLHttpRequest();
+				request.open('POST', 'http://localhost:' + port + '/session/' + session + '/url', true);
+				request.setRequestHeader('Content-Type', 'application/json');
+
+				request.onload = function() {
+				  cb(null, JSON.parse(request.responseText));
+				};
+
+				request.onerror = function() {
+				  cb(arguments, null);
+				};
+
+			  request.send(JSON.stringify({url: url}));
+			};
+			
+			var getScreenshot = function (session, port, cb) {
+				var request = new XMLHttpRequest();
+				request.open('GET', 'http://localhost:' + port + '/session/' + session + '/screenshot', true);
+				request.setRequestHeader('Content-Type', 'application/json');
+
+				request.onload = function() {
+					cb(null, JSON.parse(request.responseText));
+				};
+
+				request.onerror = function() {
+					cb(arguments, null);
+				};
+
+				request.send();
+			};
+			
+			var getPageTitle = function (session, port, cb) {
+				var request = new XMLHttpRequest();
+				request.open('GET', 'http://localhost:' + port + '/session/' + session + '/title', true);
+				request.setRequestHeader('Content-Type', 'application/json');
+
+				request.onload = function() {
+					cb(null, JSON.parse(request.responseText));
+				};
+
+				request.onerror = function() {
+					cb(arguments, null);
+				};
+
+				request.send();
+			};			
+			
+			var closeSession = function (session, port) {
+			  var request = new XMLHttpRequest();
+			  request.open('DELETE', 'http://localhost:' + port + '/session/' + session, true);
+			  request.setRequestHeader('Content-Type', 'application/json');
+			  request.send();			
+			};
+			
+			// the fun part
+			getSession(8080, function (err, data, port) {
+				if (err) console.error(err);
+				
+				var session = data.sessionId;
+				// http://docs.webplatform.org/wiki/Main_Page
+				openUrl('http://www.whatsmyuseragent.com/', session, port, function (err, data) {
+					if (err) console.error(err);
+					
+					getPageTitle(session, port, function (err, data) {
+						if (err) console.error(err);
+						
+						var el = document.createElement('div');
+				    var contents = document.createTextNode('Title: ' + data.value);
+				    el.appendChild(contents);
+				    document.getElementsByTagName('body')[0].appendChild(el);
+						
+						getScreenshot(session, port, function (err, data) {
+							if (err) console.error(err);
+							console.log(data);
+							
+							var image = new Image();
+							image.src = "data:image/  png;base64," + data.value;
+							document.getElementsByTagName('body')[0].appendChild(image);
+							
+							closeSession(session, port);
+						});
+					});
+				});
+			});
+			
+			getSession(9515, function (err, data, port) {
+				if (err) console.error(err);
+				
+				var session = data.sessionId;
+				// http://docs.webplatform.org/wiki/Main_Page
+				openUrl('http://www.whatsmyuseragent.com/', session, port, function (err, data) {
+					if (err) console.error(err);
+					
+					getPageTitle(session, port, function (err, data) {
+						if (err) console.error(err);
+						
+						var el = document.createElement('div');
+				    var contents = document.createTextNode('Title: ' + data.value);
+				    el.appendChild(contents);
+				    document.getElementsByTagName('body')[0].appendChild(el);
+						
+						getScreenshot(session, port, function (err, data) {
+							if (err) console.error(err);
+							console.log(data);
+							
+							var image = new Image();
+							image.src = "data:image/  png;base64," + data.value;
+							document.getElementsByTagName('body')[0].appendChild(image);
+							
+							closeSession(session, port);
+						});
+					});
+				});
+			});			
+			
+		</script>
+    </body>
+</html>

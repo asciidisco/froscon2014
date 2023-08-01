@@ -60,7 +60,7 @@ var getSession = function (cb) {
 };
 
 getSession(function (err, data) {
-  openUrl('http://amazon.com', data.sessionId, function (err) {
+  openUrl('http://reuter.de', data.sessionId, function (err) {
     getScreenshot(data.sessionId, function (err, screenshot) {
       var img = document.createElement('img');
       img.src = 'data:image/png;base64,' + screenshot.value;

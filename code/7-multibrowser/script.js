@@ -3,8 +3,8 @@ var chrome = new Browser({name: 'chrome', port: 9515, addr: 'localhost'});
 var firefox = new Browser({name: 'firefox', port: 8000, addr: 'localhost'});
 //var ie = new Browser({name: 'InternetExplorer', port: 5555, addr: 'localhost'});
 
-var url = 'http://amazon.com';
-var windowSize = {width: 600, height: 800};
+var url = 'http://amazon.de';
+var windowSize = {width: 1440, height: 2048};
 
 phantomjs.getSession(function (err, session) {
   phantomjs.setSession(session.sessionId);
@@ -31,8 +31,8 @@ chrome.getSession(function (err, session) {
         chrome.getScreenshot(function (err, screenshot) {
           var img = document.getElementById('chrome-shot');
           img.src = 'data:image/png;base64,' + screenshot.value;
-          img.style.width = windowSize.width + 'px';
-          img.style.height = windowSize.height + 'px';
+          //img.style.width = windowSize.width + 'px';
+          //img.style.height = windowSize.height + 'px';
           chrome.closeSession();
         });
       });
